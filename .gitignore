@@ -1,37 +1,37 @@
-# Compiled source #
-###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отправить номер телефона</title>
+</head>
+<body>
+    <h2>Введите ваш номер телефона</h2>
+    <form id="email-form">
+        <input type="text" id="phone" name="phone" placeholder="Ваш номер" required>
+        <input type="submit" value="Отправить">
+    </form>
 
-# Packages #
-############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        // Инициализация EmailJS
+        emailjs.init("YOUR_USER_ID"); // Замените на ваш USER_ID
 
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
+        document.getElementById("email-form").addEventListener("submit", function(event) {
+            event.preventDefault();  // Предотвратить перезагрузку страницы
 
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+            // Получаем номер телефона, введённый пользователем
+            var phone = document.getElementById("phone").value;
+
+            // Отправляем номер на email через EmailJS
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                phone: phone  // Это передаваемое значение (номер телефона)
+            })
+            .then(function(response) {
+                alert("Номер успешно отправлен!");
+            }, function(error) {
+                alert("Ошибка при отправке: " + error);
+            });
+        });
+    </script>
+</body>
+</html>
